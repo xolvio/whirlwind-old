@@ -1,0 +1,33 @@
+{
+  "name": "whirlwind",
+  "version": "0.1.0",
+  "description": "Runs your tests concurrently and in parallel on cloud CI servers like TravisCI and CircleCI",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xolvio/whirlwind.git"
+  },
+  "keywords": [
+    "parallel",
+    "ci",
+    "testing",
+    "distributed",
+    "travis",
+    "travisci",
+    "circle",
+    "circleci",
+    "codeship",
+    "cucumber",
+    "jasmine",
+    "mocha"
+  ],
+  "author": "Sam Hatoum",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xolvio/whirlwind/issues"
+  },
+  "homepage": "https://github.com/xolvio/whirlwind#readme"
+}
