@@ -1,0 +1,90 @@
+{
+  "settings": {
+    "currentNodeEnvironmentVariable": "$CI_NODE",
+    "totalNodesEnvironmentVariable": "$CI_TOTAL_NODES"
+  },
+  "processors": [
+    {
+      "name": "cucumber",
+      "parallelism": "3",
+      "concurrency": "1",
+      "strategy": {
+        "source": "directory",
+        "args": [
+          "./tests/cucumber/features/*.features"
+        ],
+        "symbol": "FEATURE"
+      },
+      "runner": {
+        "executable": "./cucumber.js",
+        "parameters": [
+          {
+            "iterate": "${FEATURE}"
+          }
+        ],
+        "separator": " "
+      }
+    },
+    {
+      "name": "package-tests",
+      "parallelism": "2",
+      "concurrency": "2",
+      "strategy": {
+        "source": "list",
+        "args": [
+          [
+            "internal:alerts",
+            "internal:cards",
+            "internal:common-ui",
+            "internal:fab",
+            "internal:job-add",
+            "internal:job-details",
+            "internal:job-filter",
+            "internal:job-list",
+            "internal:layout",
+            "internal:login",
+            "internal:redirect",
+            "internal:support",
+            "internal:tutorial",
+            "internal:user",
+            "internal:user-ad"
+          ]
+        ],
+        "symbol": "PACKAGE"
+      },
+      "runner": {
+        "executable": "./package-tests.js",
+        "parameters": [
+          {
+            "iterate": "${PACKAGE}"
+          }
+        ],
+        "separator": ","
+      },
+      "environment": {
+        "MONGO_URL": "mongodb://localhost:27017/meteor-app"
+      }
+    },
+    {
+      "name": "mocha",
+      "parallelism": "1",
+      "concurrency": "5",
+      "strategy": {
+        "source": "directory",
+        "args": [
+          "./tests/mocha/*.js"
+        ],
+        "symbol": "SPEC"
+      },
+      "runner": {
+        "executable": "./mocha.js",
+        "parameters": [
+          {
+            "iterate": "--grep ${SPEC}"
+          }
+        ],
+        "separator": " "
+      }
+    }
+  ]
+}
