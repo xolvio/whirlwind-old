@@ -1,8 +1,9 @@
 {
   "name": "whirlwind",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Reduce your build times exponentially by using parallelism and concurrency on TravisCI / CircleCI / CodeShip / Locally / Anywhere!",
-  "main": "bin/whirlwind.js",
+  "preferGlobal": "true",
+  "bin": "bin/whirlwind.js",
   "scripts": {
     "test": "./node_modules/jasmine/bin/jasmine.js"
   },
