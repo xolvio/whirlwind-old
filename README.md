@@ -9,13 +9,13 @@ nodes (parallelism), as well as within compute nodes (concurrency).
 
 The tasks source can be either a predefined list, or a directory.
 
-## How does it work?
+### How does it work?
 
 You provide a set of tasks (files or strings) that you'd like to distribute. You configure the parallelism & concurrency
 parameters, and Whirlwind will distribute the list of tasks across the nodes and within them and run them all. If all of
 the tasks pass, you get a clean exit code. If any fail, you see the error and deal with it. That's it!
 
-## Can I do more than that?
+### Can I do more than that?
 
 Yep. You can add pre-processors and post-processors to do some setup and finalizing. For example, if you're running 
 end-to-end tests, you'll probably want to start a server first, or you may want to instrument all your files before 
@@ -186,3 +186,7 @@ var nodeController = require('./../lib/node-controller');
 var configuration = {}; // exactly the same as the configuration file above
 nodeController.run(configuration);
 ```
+
+
+## Credits
+Many thanks to [Dispatch Technologies](http://www.dispatch.me/) for sponsoring this work and for being such a great member of the Open Source community. You should check out their [repository](https://github.com/dispatchme) for some more OSS from their awesome team.
