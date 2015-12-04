@@ -1,0 +1,54 @@
+{
+  "totalNodes": 2,
+  "nodeId": 0,
+  "processes": [
+    {
+      "preProcessors": [
+        {
+          "module": "exec-runner",
+          "moduleOptions": {
+            "command": "echo do some stuff first, maybe instrument the source files then start a server"
+          }
+        }
+      ],
+      "name": "my first task",
+      "parallelism": 1,
+      "processor": {
+        "module": "exec-runner",
+        "source": {
+          "directory": "lib",
+          "pattern": "**/*.*"
+        },
+        "moduleOptions": {
+          "command": "echo do something with these files: $TASKS",
+          "separator": " "
+        },
+        "concurrency": 2
+      },
+      "postProcessors": [
+        {
+          "module": "exec-runner",
+          "moduleOptions": {
+            "command": "echo collect the results and post them somewhere"
+          }
+        }
+      ]
+    }
+  ,
+    {
+      "name": "my other task",
+      "parallelism": 1,
+      "processor": {
+        "module": "exec-runner",
+        "source": {
+          "list": ["some:package", "another:package", "and:another"]
+        },
+        "moduleOptions": {
+          "command": "echo do something with these list items: $TASKS",
+          "separator": " "
+        },
+        "concurrency": 1
+      }
+    }
+  ]
+}
