@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/xolvio/whirlwind/develop/whirlwind.png) Whirlwind by Xolv.io 
 --------------------
-[![Circle CI](https://circleci.com/gh/xolvio/whirlwind.svg?style=svg)](https://circleci.com/gh/xolvio/whirlwind) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/whirlwind)
+[![Circle CI](https://circleci.com/gh/xolvio/whirlwind.svg?style=svg)](https://circleci.com/gh/xolvio/whirlwind) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp)
 
 Reduce your build times from hours to minutes on TravisCI, CircleCI, CodeShip and even locally.
 
