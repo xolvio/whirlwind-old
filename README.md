@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/xolvio/whirlwind/develop/whirlwind.png) Whirlwind by Xolv.io 
+[![Whirlwind](https://raw.githubusercontent.com/xolvio/whirlwind/develop/whirlwind.png)](https://github.com/xolvio/whirlwind) Whirlwind by [Xolv.io](http://xolv.io)
 --------------------
 [![Circle CI](https://circleci.com/gh/xolvio/whirlwind.svg?style=svg)](https://circleci.com/gh/xolvio/whirlwind) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp)
 
