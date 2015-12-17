@@ -13,7 +13,7 @@ describe('NodeController', function () {
           parallelism: 2,
           processor: {
             source: {
-              directory: path.resolve(baseDir, 'spec', 'test-files'),
+              directory: path.resolve(baseDir, 'src', 'spec', 'test-files'),
               'pattern': '**/*.*'
             }
           }

@@ -1,19 +1,28 @@
-module.exports = function () {
+module.exports = function wallabyConfig() {
   return {
     files: [
-      'bin/*.js',
-      'lib/**/*.js'
+      'src/bin/*.js',
+      'src/lib/**/*.js',
     ],
     tests: [
-      'spec/*.js'
+      'src/spec/helpers/**/*.js',
+      '!src/spec/helpers/**/runtime.js',
+      'src/spec/**/*[sS]pec.js',
     ],
+    preprocessors: {
+      '**/*.js': file => require('babel-core').transform(file.content, {
+        sourceMap: true,
+        plugins: ['transform-runtime'],
+        presets: ['es2015', 'stage-2'],
+      }),
+    },
     env: {
       type: 'node',
       runner: 'node',
       params: {
-        runner: '--harmony'
-      }
+        runner: '--harmony',
+      },
     },
-    testFramework: 'jasmine'
+    testFramework: 'jasmine',
   };
 };

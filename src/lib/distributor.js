@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 
+const {a, b} = {a: 'a', b: 'b'};
+
 function _addQueue(distribution) {
   return function () {
     distribution.push([]);
