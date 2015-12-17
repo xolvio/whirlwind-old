@@ -1,29 +1,18 @@
-"use strict";
-
-var _ = require('lodash');
-
-const {a, b} = {a: 'a', b: 'b'};
-
-function _addQueue(distribution) {
-  return function () {
-    distribution.push([]);
-  }
-}
-
-function _distribute(distribution) {
-  return function (item, index) {
-    distribution[index % distribution.length].push(item);
-  }
-}
+const _ = require('lodash');
 
 module.exports = {
   createDistribution(items, numberOfSegments) {
     const distribution = [];
-    _.times(numberOfSegments, _addQueue(distribution));
-    _.forEach(items, _distribute(distribution));
+    _.times(numberOfSegments, function addQueue() {
+      distribution.push([]);
+    });
+    _.forEach(items, (item, index) => {
+      distribution[index % distribution.length].push(item);
+    });
     return distribution;
   },
-  getDistributionForSegment: function (items, numberOfSegments, segmentNumber) {
+
+  getDistributionForSegment(items, numberOfSegments, segmentNumber) {
     return this.createDistribution(items, numberOfSegments)[segmentNumber];
-  }
+  },
 };

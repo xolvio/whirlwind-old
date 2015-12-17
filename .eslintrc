@@ -1,5 +1,5 @@
 {
-  //"extends": "airbnb/base",
+  "extends": "airbnb/base",
   "env": {
     "node": true,
     "es6": true
@@ -9,6 +9,7 @@
     "_": false
   },
   "rules": {
-    "object-curly-spacing": 0
+    "object-curly-spacing": 0,
+    "no-use-before-define": [2, "nofunc"]
   }
 }

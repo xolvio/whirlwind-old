@@ -17,5 +17,8 @@
     "fit": false,
     "fdescribe": false,
     "pending": false
+  },
+  "rules": {
+    "func-names": 0
   }
 }
