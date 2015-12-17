@@ -12,7 +12,7 @@
         }
       ],
       "name": "my first task",
-      "parallelism": 1,
+      "parallelism": 4,
       "processor": {
         "module": "exec-runner",
         "source": {
