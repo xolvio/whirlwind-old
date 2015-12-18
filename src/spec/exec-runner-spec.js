@@ -2,17 +2,17 @@ const execRunner = require('../lib/runners/exec-runner');
 const childProcess = require('child_process');
 
 describe('Exec Runner', function () {
-  describe('run', function () {
+  describe('createRunner', function () {
     it('flattens task arrays into the command line using a comma separator by default', function () {
       spyOn(childProcess, 'exec');
-      execRunner.run({
+      execRunner.createRunner({
         command: 'command $TASKS',
       })(['task-one', 'task-two']);
       expect(childProcess.exec).toHaveBeenCalledWith('command task-one,task-two', jasmine.any(Function));
     });
     it('flattens task arrays into the command line using a the provided separator', function () {
       spyOn(childProcess, 'exec');
-      execRunner.run({
+      execRunner.createRunner({
         command: 'command $TASKS',
         separator: '#',
       })(['task-one', 'task-two', 'task-three']);
@@ -20,7 +20,7 @@ describe('Exec Runner', function () {
     });
     it('creates a command from a single string', function () {
       spyOn(childProcess, 'exec');
-      execRunner.run({
+      execRunner.createRunner({
         command: 'command $TASKS',
       })('single-task');
       expect(childProcess.exec).toHaveBeenCalledWith('command single-task', jasmine.any(Function));
@@ -28,7 +28,7 @@ describe('Exec Runner', function () {
     it('delegates errors and results up the callbacks chain', function () {
       spyOn(childProcess, 'exec');
       const callbackChain = jasmine.createSpy();
-      execRunner.run({command: 'command'})(null, callbackChain);
+      execRunner.createRunner({command: 'command'})(null, callbackChain);
       const execCallback = childProcess.exec.calls.argsFor(0)[1];
 
       execCallback('error', null);

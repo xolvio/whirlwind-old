@@ -2,6 +2,7 @@ const _ = require('lodash');
 const logger = require('./log')('[node-controller]');
 const distributor = require('./distributor');
 const processController = require('./process-controller');
+const async = require('async');
 
 function _distributeTasksAcrossProcesses(processes) {
   _.each(processes, function distributeTasksOfProcess(process) {
@@ -41,19 +42,16 @@ function _getTasksForProcess(process) {
   return sourceStrategy.parse(process.processor.source);
 }
 
-function _getProcessForNode(options) {
-  logger.debug(`_getProcessForNode: ${JSON.stringify(options)}`);
+function _getProcessesForNode(options) {
+  logger.debug(`_getProcessesForNode: ${JSON.stringify(options)}`);
   const expandedProcesses = _expandProcesses(options.processes);
   if (expandedProcesses.length <= options.nodeId) {
     logger.error('Oops! Make sure the nodeId is less than the total number of nodes (the sum of parallelism).'.red);
   }
-  if (expandedProcesses.length !== options.totalNodes) {
-    logger.error('Oops! Make sure the totalNodes is equal to the total number of nodes (the sum of parallelism).'.red);
-  }
   logger.debug(`_getProcessForNode expandedProcesses: ${JSON.stringify(expandedProcesses)}`);
-  const processDistributionForNode = distributor.getDistributionForSegment(expandedProcesses, expandedProcesses.length, options.nodeId);
+  const processDistributionForNode = distributor.getDistributionForSegment(expandedProcesses, options.totalNodes, options.nodeId);
   logger.debug(`_getProcessForNode processDistributionForNode: ${JSON.stringify(processDistributionForNode)}`);
-  return processDistributionForNode[0];
+  return processDistributionForNode;
 }
 
 function _resolveEnvironmentVariables(options) {
@@ -73,10 +71,19 @@ function _resolveEnvironmentVariables(options) {
 }
 
 module.exports = {
-  run(options) {
+  run(options, onComplete) {
     _resolveEnvironmentVariables(options);
     logger.debug(`run: ${JSON.stringify(options)}`);
-    const process = _getProcessForNode(options);
-    processController.run(process);
+    const processes = _getProcessesForNode(options);
+    async.map(processes,
+      (process, callback) => {
+        processController.run(process, callback);
+      },
+      (error, results) => {
+        if (_.isFunction(onComplete)) {
+          onComplete(error, results);
+        }
+      }
+    );
   },
 };

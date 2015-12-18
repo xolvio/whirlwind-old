@@ -3,9 +3,9 @@ const logger = require('../log')('[exec-runner]');
 const colors = require('colors');
 
 module.exports = {
-  run(options) {
+  createRunner(options) {
     logger.debug('run: ', JSON.stringify(options));
-    return function runner(tasks, callback) {
+    return function execRunner(tasks, callback) {
       logger.debug('inner run: ', options.command, tasks);
       let command;
       if (Array.isArray(tasks)) {

@@ -3,37 +3,35 @@ const async = require('async');
 const logger = require('./log')('[process-controller]');
 const processor = require('./processor');
 const colors = require('colors');
-const exit = require('exit');
-
 function _initializeProcessors(processors) {
   /* eslint no-param-reassign: 0 */
   processors = [].concat(processors || []);
   _.each(processors, function initializeProcessor(processOptions, index) {
-    processors[index] = processor.run(processOptions);
+    processors[index] = processor.createRunner(processOptions);
   });
   return processors;
 }
 
 module.exports = {
-  run(options) {
+  run(options, onComplete) {
     logger.debug(`run: ${JSON.stringify(options)}`);
-    const self = this;
     const processors = [].concat(
        _initializeProcessors(options.preProcessors, options),
-       processor.run(options.processor),
+       processor.createRunner(options.processor),
        _initializeProcessors(options.postProcessors, options)
     );
-    async.series(processors, function runProcessor(error) {
-      if (error) {
-        // logger.error(colors.red(error));
-        logger.error(colors.red('=> Summary: Some runners failed.'));
-      } else {
-        logger.info(colors.green('=> Summary: All runners passed.'));
+    async.series(
+      processors,
+      (error) => {
+        if (error) {
+          // logger.error(colors.red(error));
+          logger.error(colors.red('=> Summary: A runner failed.'));
+          onComplete(error, 1);
+        } else {
+          logger.info(colors.green('=> Summary: All runners passed.'));
+          onComplete(null, 0);
+        }
       }
-      self._exit(error ? 1 : 0);
-    });
-  },
-  _exit() {
-    return exit.apply(this, arguments);
+    );
   },
 };

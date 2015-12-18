@@ -97,4 +97,45 @@ describe('NodeController', function () {
       expect(processController.run.calls.argsFor(0)[0].processor.tasks).toEqual(['c', 'f']);
     });
   });
+
+  describe('run', function () {
+    it('runs all tasks that are assigned to the node', function (done) {
+      const processes = [
+        {
+          name: 'cucumber',
+          parallelism: 1,
+          processor: {
+            module: 'noop-runner',
+            source: {
+              list: [],
+            },
+          },
+        },
+        {
+          name: 'mocha',
+          parallelism: 1,
+          processor: {
+            module: 'noop-runner',
+            source: {
+              list: [],
+            },
+          },
+        },
+      ];
+
+      spyOn(processController, 'run').and.callThrough();
+
+      nodeController.run(
+        {
+          processes,
+          nodeId: 0,
+          totalNodes: 1,
+        },
+        function onComplete() {
+          expect(processController.run.calls.count()).toBe(2);
+          done();
+        }
+      );
+    });
+  });
 });

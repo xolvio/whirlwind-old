@@ -3,10 +3,10 @@ const async = require('async');
 const logger = require('./log')('[processor]');
 
 module.exports = {
-  run(options) {
+  createRunner(options) {
     logger.debug(`run: ${JSON.stringify(options)}`);
     const self = this;
-    return function runner(callback) {
+    return function processorRunner(callback) {
       async.mapLimit(
          self._batchTasks(options),
          options.concurrency || 1,
@@ -24,7 +24,7 @@ module.exports = {
   },
   _getRunner(options) {
     const runnerImpl = require('./runners/' + options.module);
-    return runnerImpl.run(options.moduleOptions);
+    return runnerImpl.createRunner(options.moduleOptions);
   },
   _batchTasks(options) {
     if (!options.tasks) {

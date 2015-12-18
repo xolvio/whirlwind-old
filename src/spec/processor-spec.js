@@ -5,14 +5,14 @@ const execRunner = require('../lib/runners/exec-runner');
 describe('processor', function () {
   describe('run', function () {
     it('returns a function', function () {
-      expect(processor.run({})).toEqual(jasmine.any(Function));
+      expect(processor.createRunner({})).toEqual(jasmine.any(Function));
     });
     it('runs a mapLimit using the processor items, concurrency and runner', function () {
       spyOn(async, 'mapLimit');
       spyOn(processor, '_getRunner').and.returnValue('runner');
       spyOn(processor, '_batchTasks').and.returnValue(['tasks']);
 
-      processor.run({concurrency: 3})();
+      processor.createRunner({concurrency: 3})();
 
       expect(async.mapLimit).toHaveBeenCalledWith(['tasks'], 3, 'runner', jasmine.any(Function));
     });
@@ -21,7 +21,7 @@ describe('processor', function () {
       spyOn(processor, '_getRunner').and.returnValue('runner');
       spyOn(processor, '_batchTasks').and.returnValue(['tasks']);
       const callbackChain = jasmine.createSpy();
-      processor.run({concurrency: 0})(callbackChain);
+      processor.createRunner({concurrency: 0})(callbackChain);
       const mapLimitCallback = async.mapLimit.calls.argsFor(0)[3];
 
       mapLimitCallback('error', null);
@@ -33,11 +33,11 @@ describe('processor', function () {
   });
   describe('_getRunner', function () {
     it('loads the module set in the options', function () {
-      spyOn(execRunner, 'run');
+      spyOn(execRunner, 'createRunner');
 
       processor._getRunner({module: 'exec-runner'});
 
-      expect(execRunner.run).toHaveBeenCalled();
+      expect(execRunner.createRunner).toHaveBeenCalled();
     });
   });
   describe('_batchTasks', function () {
