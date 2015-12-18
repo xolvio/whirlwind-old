@@ -1,13 +1,11 @@
-var Distributor = require('../lib/distributor');
+const Distributor = require('../lib/distributor');
 
 describe('Distributor', function () {
   describe('create', function () {
     it('creates a distribution', function () {
-
-
-      var distribution;
-      var items = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'];
-      var numberOfSegments = 4;
+      let distribution;
+      const items = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'];
+      const numberOfSegments = 4;
 
       distribution = Distributor.getDistributionForSegment(items, numberOfSegments, 0);
       expect(distribution.length).toBe(4);
@@ -33,7 +31,6 @@ describe('Distributor', function () {
       expect(distribution[0]).toBe('d');
       expect(distribution[1]).toBe('h');
       expect(distribution[2]).toBe('l');
-
     });
   });
 });

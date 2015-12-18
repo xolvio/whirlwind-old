@@ -1,9 +1,7 @@
-#! /usr/bin/env node
-"use strict";
+#!/usr/bin/env node
 
-var fs = require('fs');
-var whirlwind = require('../lib/index');
-var nodeController = require('./../lib/node-controller');
+const fs = require('fs');
+const nodeController = require('./../lib/node-controller');
 
-var config = JSON.parse(fs.readFileSync('whirlwind.json', 'utf8'));
+const config = JSON.parse(fs.readFileSync('whirlwind.json', 'utf8'));
 nodeController.run(config);

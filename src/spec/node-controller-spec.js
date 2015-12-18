@@ -1,12 +1,11 @@
-var nodeController = require('../lib/node-controller');
-var processController = require('../lib/process-controller');
-var path = require('path');
+const nodeController = require('../lib/node-controller');
+const processController = require('../lib/process-controller');
+const path = require('path');
 
 describe('NodeController', function () {
   describe('_nodeIdToProcessMapper', function () {
     beforeEach(function () {
-
-      var baseDir = global.wallaby ? global.wallaby.localProjectDir : path.resolve(process.cwd());
+      const baseDir = global.wallaby ? global.wallaby.localProjectDir : path.resolve(process.cwd());
       this.processors = [
         {
           name: 'cucumber',
@@ -14,28 +13,28 @@ describe('NodeController', function () {
           processor: {
             source: {
               directory: path.resolve(baseDir, 'src', 'spec', 'test-files'),
-              'pattern': '**/*.*'
-            }
-          }
+              'pattern': '**/*.*',
+            },
+          },
         },
         {
           name: 'package-tests',
           parallelism: 3,
           processor: {
             source: {
-              list: ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-            }
-          }
+              list: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+            },
+          },
         },
         {
           name: 'mocha',
           parallelism: 1,
           processor: {
             source: {
-              list: ['h', 'i', 'j', 'k', 'l', 'm', 'n']
-            }
-          }
-        }
+              list: ['h', 'i', 'j', 'k', 'l', 'm', 'n'],
+            },
+          },
+        },
       ];
     });
     it('returns the process name based on the current node id', function () {
