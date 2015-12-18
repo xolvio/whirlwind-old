@@ -1,6 +1,7 @@
 const childProcess = require('child_process');
 const logger = require('../log')('[exec-runner]');
 const colors = require('colors');
+const _ = require('lodash');
 
 module.exports = {
   createRunner(options) {
@@ -14,15 +15,24 @@ module.exports = {
         command = options.command.replace('$TASKS', tasks);
       }
 
+      if (options.copyEnvironment) {
+        options.options.env = _.extend({}, process.env, options.options.env);
+      }
+
       logger.debug('running command: ', command);
-      childProcess.exec(command, function onFinish(error, result) {
+      const proc = childProcess.exec(command, options.options, function onFinish(error, stdout) {
         if (error) {
           logger.error('command error: '.gray, colors.red(error));
-        } else {
-          logger.info('command result: '.gray, colors.green(result));
         }
-        callback(error, result);
+        callback(error, stdout);
       });
+      if (options.pipe) {
+        proc.stdout.pipe(process.stdout);
+        proc.stderr.pipe(process.stderr);
+      }
+      if (options.background) {
+        callback(null, 'Running as a background task');
+      }
     };
   },
 };
