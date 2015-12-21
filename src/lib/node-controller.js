@@ -75,7 +75,9 @@ module.exports = {
     _resolveEnvironmentVariables(options);
     logger.debug(`run: ${JSON.stringify(options)}`);
     const processes = _getProcessesForNode(options);
-    async.map(processes,
+    async.mapLimit(
+      processes,
+      1,
       (process, callback) => {
         processController.run(process, callback);
       },
