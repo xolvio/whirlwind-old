@@ -37,16 +37,24 @@ describe('Exec Runner', function () {
         jasmine.any(Function)
       );
     });
-    it('delegates errors and results up the callbacks chain', function () {
+    it('delegates errors up the callbacks chain', function () {
       spyOn(childProcess, 'exec');
       const callbackChain = jasmine.createSpy();
       execRunner.createRunner({command: 'command'})(null, callbackChain);
       const execCallback = childProcess.exec.calls.argsFor(0)[2];
 
       execCallback('error', null);
-      execCallback(null, 'results');
 
       expect(callbackChain).toHaveBeenCalledWith('error', null);
+    });
+    it('delegates results up the callbacks chain', function () {
+      spyOn(childProcess, 'exec');
+      const callbackChain = jasmine.createSpy();
+      execRunner.createRunner({command: 'command'})(null, callbackChain);
+      const execCallback = childProcess.exec.calls.argsFor(0)[2];
+
+      execCallback(null, 'results');
+
       expect(callbackChain).toHaveBeenCalledWith(null, 'results');
     });
   });
