@@ -2,7 +2,7 @@
 --------------------
 [![Circle CI](https://circleci.com/gh/xolvio/whirlwind.svg?style=svg)](https://circleci.com/gh/xolvio/whirlwind) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp)
 
-Reduce your build times from hours to minutes on TravisCI, CircleCI, CodeShip and even locally.
+Reduce your test suite time from hours to minutes on TravisCI, CircleCI, CodeShip and even locally.
 
 Whirlwind takes set of tasks that you wish to distribute, such as slow end-to-end tests, and runs them across compute 
 nodes (parallelism), as well as within compute nodes (concurrency).  
