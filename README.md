@@ -4,7 +4,7 @@
 
 Reduce your test suite time from hours to minutes on TravisCI, CircleCI, CodeShip and even locally.
 
-Whirlwind takes set of tasks that you wish to distribute, such as slow end-to-end tests, and runs them across compute 
+Whirlwind takes a set of tasks that you wish to distribute, such as slow end-to-end tests, and runs them across compute 
 nodes (parallelism), as well as within compute nodes (concurrency).  
 
 The tasks source can be either a predefined list, or a directory.
@@ -43,7 +43,7 @@ Let's go through the configuration file step-by-step:
 
 #### Node Count
 First you define the total number of nodes and the current node id. You typically have these set as environment 
-variables by CI servers, so you just have to let Whirlwins know what these are like this:
+variables by CI servers, so you just have to let Whirlwind know what these are like this:
 ```json
 {
   "totalNodes": "$CIRCLE_NODE_TOTAL",
@@ -91,8 +91,8 @@ space-separated flat array of files / strings.
 * **`processor.mode`** This can either be `"batch"` (default) or `"single"`. In single mode, the process receives the 
 tasks one by one. In batch mode, the tasks are flattened into a set of paramters to pass to the executable module.
 
-You may specify multiple processors in the configuration files. For example, you might have one processor defined with 
-a parallelism of 5 and a concurrency of 1 for your end-to-end tests, and another processor for your integration tests 
+You may specify multiple processes in the configuration files. For example, you might have one process defined with 
+a parallelism of 5 and a concurrency of 1 for your end-to-end tests, and another process for your integration tests 
 that with a parallelism of 2 and a concurrency of 3. This means you'd be utilising 7 nodes / containers. 
 
 #### Pre-Processors and Post-Processors
@@ -100,7 +100,7 @@ that with a parallelism of 2 and a concurrency of 3. This means you'd be utilisi
 If you are going to run end-to-end tests on your app, you'll likely want to start a server first. For this you can use
 pre-processors like this:
 
-````json
+```json
   "processes": [{
     "preProcessors": [
       {
@@ -177,7 +177,7 @@ within the same object as the `processor` under the `processes` namespace. The e
 ```
 
 ### Programatically
-You can also include `whirlwind` in your project and use it programatically like this:
+You can also include `whirlwind` in your project and use it programmatically like this:
 
 ```javascript
 var path = require('path');
