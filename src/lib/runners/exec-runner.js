@@ -21,7 +21,7 @@ module.exports = {
         } else {
           logger.info('command result: '.gray, colors.green(result));
         }
-        callback(error, result);
+        callback(null, {error, result});
       });
     };
   },

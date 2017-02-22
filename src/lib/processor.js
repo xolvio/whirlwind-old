@@ -12,12 +12,19 @@ module.exports = {
          options.concurrency || 1,
          self._getRunner(options),
          function runTask(error, results) {
-           if (error) {
-             logger.debug('error: ', error);
+           let err = error || results.map(el => el.error).filter(el => el);
+           let res = results.map(el => el.result).filter(el => el);
+
+           if (!err || !err.length) err = null;
+           if (!results.length) res = null;
+
+           if (err) {
+             logger.debug('errors: ', err);
            } else {
-             logger.debug('results: ', results);
+             logger.debug('results: ', res);
            }
-           callback(error, results);
+
+           callback(err, res);
          }
       );
     };
